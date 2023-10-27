@@ -19,11 +19,11 @@ Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 #define DELAYVAL 500 // Time (in milliseconds) to pause between pixels
 
 // Function prototypes
-void SetPixels(int red, int green, int blue);
+void SetPixels(uint8_t red, uint8_t green, uint8_t blue);
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(115200); // INITIALIZE serial monitor
   pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
 }
 
@@ -35,45 +35,35 @@ void loop()
   int green = 0;
   int blue = 0;
 
+  // Cycle through the red values
   for (red = 1; red <= 255; red++)
   {
     SetPixels(red, green, blue);
   }
-
+  // Move from red to green
   for (green = 1; green <= 255; green++)
   {
     red--;
     if (red < 0) { red = 0; }
     SetPixels(red, green, blue);
   }
-
+  // Move from green to blue
   for (blue = 1; blue <= 255; blue++)
   {
     green--;
     if (green < 0) { green = 0; }
     SetPixels(red, green, blue);
   }
-
+  // Move from blue to white
   for (red = 1; red <= 255; red++)
   {
     green = red;
     SetPixels(red, green, blue);
   }
-
-
-  // for (int red = 1; red <= 255; red+=10)
-  // {
-  //   for (int green = 1; green <= 255; green+=10)
-  //   {
-  //     for (int blue = 1; blue <= 255; blue+=10)
-  //     {
-  //       SetPixels(red, green, blue);
-  //     } //for (int blue = 1; blue <= 255; blue++)
-  //   } // for (int green = 1; green <= 255; green++)
-  // } // for (int red = 1; red <= 255; red++)
 }
 
-void SetPixels(int red, int green, int blue)
+// Set the color of the pixels in the string
+void SetPixels(uint8_t red, uint8_t green, uint8_t blue)
 {
   // The first NeoPixel in a strand is #0, second is 1, all the way up
   // to the count of pixels minus one.
